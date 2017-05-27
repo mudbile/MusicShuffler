@@ -1,11 +1,3 @@
-# I have an mp3 that doesn't shuffle and doesn't allow subdirectories
-# I wanted a way to randomise songs from a bunch of folders, but keep internal ordering
-# for some of them (i.e. podcast segments and audiobooks)
-# TODO: discriminate between folders that keep order and folders that don't - maybe by some folder prefix
-#		when the GUI comes, it will be a checkbox or something
-#		at the moment they're either all randomised or all non-randomised
-
-
 import sys, os, glob
 import random
 from datetime import datetime
