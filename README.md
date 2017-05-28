@@ -6,6 +6,15 @@ songs from a bunch of folders, but keep internal ordering for some of them (i.e.
 It started out as a small python prototype but I wanted a GUI so it's a WPF application- you can just download the
 "Music Shuffler" executable and run it (or, if you want to, you dig down to the bin/release folder and grab the latest build).
 
+# Screenshots
+
+![Screenshot_1.png](/screenshots/Screenshot_1.png) 
+![Screenshot_2.png](/screenshots/Screenshot_2.png)
+
+![Screenshot_3.png](/screenshots/Screenshot_3.png)
+![Screenshot_4.png](/screenshots/Screenshot_4.png)
+
+
 # How to use
 
 Start the application and click **GET ALBUMS**. You can select multiple top-level directories and he will dig down 
@@ -28,5 +37,6 @@ Once you click **MAKE PLAYLIST** the copying will begin.
 # Special thanks
 
 I found a useful class for providing natural ordering [here](https://www.codeproject.com/Articles/22978/Implementing-the-NET-IComparer-interface-to-get-a).
-	
+
+I also used Fody to wrap everything up into one executable, and the old WindowsAPICodepack for the folder dialogue.
 
