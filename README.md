@@ -3,6 +3,9 @@
 I have an mp3 player that doesn't shuffle and doesn't allow subdirectories. I wanted a way to randomise 
 songs from a bunch of folders, but keep internal ordering for some of them (i.e. podcast segments and audiobooks).
 
+It started out as a small python prototype but I wanted a GUI so it's a WPF application- you can just download the
+"Music Shuffler" executable and run it (or, if you want to, you dig down to the bin/release folder and grab the latest build).
+
 # How to use
 
 Start the application and click **GET ALBUMS**. You can select multiple top-level directories and he will dig down 
@@ -24,6 +27,6 @@ Once you click **MAKE PLAYLIST** the copying will begin.
 
 # Special thanks
 
-I found a useful class for providing natural ordering [here](https://www.codeproject.com/Articles/22978/Implementing-the-NET-IComparer-interface-to-get-a)
+I found a useful class for providing natural ordering [here](https://www.codeproject.com/Articles/22978/Implementing-the-NET-IComparer-interface-to-get-a).
 	
 
