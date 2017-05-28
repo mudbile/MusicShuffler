@@ -53,17 +53,19 @@ namespace Music_Shuffler {
             foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
                 Album album = albumItem.Tag as Album;
 
-                //check output/input collisions
-                if ((bool)(((Grid)albumItem.Content).Children[0] as CheckBox).IsChecked) {
+                //won't add unless combo is enabled
+                if ((bool)(((Grid)albumItem.Content).Children[0] as ComboBox).IsEnabled) {
+                    //check output/input collisions
                     if (Path.GetFullPath(album.albumRoot) == Path.GetFullPath(outputFolder)){
                         MessageBox.Show("The output directory cannot be an input album:\n" + 
                                          Path.GetFullPath(album.albumRoot), "Message Shuffler");
                         return;
                     }
 
+                    //add album
                     albumsToInclude.Add(album);
                     album.randomiseSongs = (bool)(((Grid)albumItem.Content).Children[1] as CheckBox).IsChecked;
-                    album.cursorIndex = ((((Grid)albumItem.Content).Children[0] as CheckBox).Content as ComboBox).SelectedIndex;
+                    album.cursorIndex = (((Grid)albumItem.Content).Children[0] as ComboBox).SelectedIndex;
                 }
 
             }
@@ -97,14 +99,13 @@ namespace Music_Shuffler {
         /*       Select All / Select None         and         Shuffle All / Shuffle None               */
         /***********************************************************************************************/
         public void chkSelectAllClicked(object sender, RoutedEventArgs ev) {
-            setAlbumCheckboxTo(indexOfCheckbox: 0, value: (bool)chkSelectAll.IsChecked);
+            foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
+                (((Grid)albumItem.Content).Children[0] as ComboBox).IsEnabled = (bool)chkSelectAll.IsChecked;
+            }
         }
         public void chkShuffleAllClicked(object sender, RoutedEventArgs ev) {
-            setAlbumCheckboxTo(indexOfCheckbox: 1, value: (bool)chkShuffleAll.IsChecked);
-        }
-        private void setAlbumCheckboxTo(int indexOfCheckbox, bool value) {
             foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
-                (((Grid)albumItem.Content).Children[indexOfCheckbox] as CheckBox).IsChecked = value;
+                (((Grid)albumItem.Content).Children[1] as CheckBox).IsChecked = (bool)chkShuffleAll.IsChecked;
             }
         }
         /***********************************************************************************************/
@@ -149,22 +150,14 @@ namespace Music_Shuffler {
             foreach (Album album in playlist.albums) {
                 //make combo box for each album
                 ComboBox albumCombo = new ComboBox();
+                albumCombo.Style = (Style)Resources["styleComboBox"];
                 albumCombo.Items.Add(Path.GetFileName(album.albumRoot));
                 foreach (String songPath in album.albumSongs) {
                     albumCombo.Items.Add(Path.GetFileName(songPath));
                 }
                 albumCombo.SelectedIndex = 0;
 
-                //Make checkboxes
-                CheckBox includeAlbum = new CheckBox();
-                includeAlbum.Click += (o, e) => {
-                    if (!(bool)includeAlbum.IsChecked) {
-                        chkSelectAll.IsChecked = false;
-                    }
-                };
-                includeAlbum.Content = albumCombo;
-                includeAlbum.ToolTip = album.albumRoot;
-                includeAlbum.Style = (Style)Resources["styleCheckbox2"];
+                albumCombo.ToolTip = album.albumRoot;
 
                 CheckBox shuffleAlbum = new CheckBox();
                 shuffleAlbum.Click += (o, e) => {
@@ -179,21 +172,21 @@ namespace Music_Shuffler {
 
                 //shuffle checkbox will not be enabled when the album is not being included
                 Binding shuffletoIncludeAlbumBinding = new Binding();
-                shuffletoIncludeAlbumBinding.Source = includeAlbum;
-                shuffletoIncludeAlbumBinding.Path = new PropertyPath("IsChecked");
+                shuffletoIncludeAlbumBinding.Source = albumCombo;
+                shuffletoIncludeAlbumBinding.Path = new PropertyPath("IsEnabled");
                 BindingOperations.SetBinding(shuffleAlbum, CheckBox.IsEnabledProperty, shuffletoIncludeAlbumBinding);
 
-                //Make grid to hold checkboxes
+                //Make grid to hold checkbox and combo
                 Grid albumGrid = new Grid();
                 ColumnDefinition c1 = new ColumnDefinition();
-                c1.Width = new GridLength(1, GridUnitType.Star);
+                c1.Width = new GridLength(3, GridUnitType.Star);
                 ColumnDefinition c2 = new ColumnDefinition();
-                c2.Width = new GridLength(1, GridUnitType.Auto);
+                c2.Width = new GridLength(2, GridUnitType.Star);
                 albumGrid.ColumnDefinitions.Add(c1);
                 albumGrid.ColumnDefinitions.Add(c2);
                 //add the two checkboxes to the grid
-                Grid.SetColumn(includeAlbum, 0);
-                albumGrid.Children.Add(includeAlbum);
+                Grid.SetColumn(albumCombo, 0);
+                albumGrid.Children.Add(albumCombo);
                 Grid.SetColumn(shuffleAlbum, 1);
                 albumGrid.Children.Add(shuffleAlbum);
 
@@ -201,6 +194,12 @@ namespace Music_Shuffler {
                 ListBoxItem albumItem = new ListBoxItem();
                 albumItem.Content = albumGrid;
                 albumItem.Tag = album;
+                albumItem.MouseRightButtonUp += (o, e) => {
+                    albumCombo.IsEnabled = !(bool)albumCombo.IsEnabled;
+                    if (!(bool)albumCombo.IsEnabled) {
+                        chkSelectAll.IsChecked = false;
+                    }
+                };
 
                 //add ListBoxItem to ListBox
                 lstbxAlbums.Items.Add(albumItem);

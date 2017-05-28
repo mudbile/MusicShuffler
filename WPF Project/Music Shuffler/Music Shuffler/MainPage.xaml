@@ -11,7 +11,7 @@
 
 	<Page.Resources>
 		<Style x:Key="styleTextBox" TargetType="{x:Type TextBox}">
-			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="FontSize" Value="15"/>
 		</Style>
 		<Style x:Key="styleButton" TargetType="{x:Type Button}">
 			<Setter Property="Margin" Value="5 5 5 5"/>
@@ -39,6 +39,10 @@
 			<Setter Property="FontSize" Value="20"/>
 			<Setter Property="VerticalAlignment" Value="Center"/>
 			<Setter Property="VerticalContentAlignment" Value="Center"/>
+		</Style>
+		<Style x:Key="styleComboBox" TargetType="{x:Type ComboBox}">
+			<Setter Property="FontSize" Value="15"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
 		</Style>
 		<Style x:Key="styleConsole" TargetType="{x:Type TextBox}">
 			<Setter Property="Margin" Value="0"/>
@@ -83,7 +87,7 @@
 				<ColumnDefinition Width="auto"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<TextBox Name="txtOutputFolder" Grid.Column="0" ToolTip="Enter output folder" Style="{StaticResource styleTextBox}"/>
+			<TextBox Name="txtOutputFolder" Grid.Column="0" ToolTip="{Binding ElementName=txtOutputFolder, Path=Text}" Style="{StaticResource styleTextBox}"/>
 			<Button Name="btnChooseOutput" Grid.Column="1" Click="btnChooseOutputClicked" Style="{StaticResource styleButton2}">. . .</Button>
 			<Button Name="btnMakePlaylist" Grid.Column="2" Click="btnMakePlaylistClicked" Style="{StaticResource styleButton2}">Make Playlist</Button>
 		</Grid>
