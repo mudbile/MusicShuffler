@@ -13,14 +13,14 @@ namespace Music_Shuffler {
     /// The album itself might still be shuffled beforehand
     /// </summary>
     class Playlist {
-        public String rootFolder = "";
+        public List<String> rootFolders = new List<string>();
         public List<Album> albums = new List<Album>();
         public Dictionary<String, String> playlist = new Dictionary<String, String>();
         public List<String> musicExtensions = new List<string>();
         public String outputFolder = "";
 
-        public Playlist(String _rootFolder, List<String> _musicExtensions) {
-            this.rootFolder = _rootFolder;
+        public Playlist(List<String> _rootFolders, List<String> _musicExtensions) {
+            this.rootFolders = _rootFolders;
             this.musicExtensions = _musicExtensions;
             this.generateAlbums();
         }
@@ -31,7 +31,7 @@ namespace Music_Shuffler {
         /// </summary>
         public void generateAlbums() {
             this.albums.Clear();
-            List<Leaf> leaves = Utils.FolderWalk(this.rootFolder, this.musicExtensions);
+            List<Leaf> leaves = Utils.FolderWalk(this.rootFolders, this.musicExtensions);
             foreach (Leaf leaf in leaves) {
                 this.albums.Add(new Album(leaf.root, leaf.files, _randomiseSongs: false));
             }
@@ -46,7 +46,8 @@ namespace Music_Shuffler {
             List<Album> tempAlbumsList = albumsToInclude.Select(album => new Album(album)).ToList();
 
             int counter = 0;
-            String prefixTemplateString = "D" + (Math.Log10(tempAlbumsList.Sum(album => album.numSongs()) + 1));
+            int numSongs = tempAlbumsList.Sum(album => album.numSongs());
+            String prefixTemplateString = "D" + (Math.Floor(Math.Log10(numSongs)) + 1);
             
             while (tempAlbumsList.Count != 0) {
                 int index = Utils.randomGenerator.Next(tempAlbumsList.Count);
@@ -67,7 +68,7 @@ namespace Music_Shuffler {
 
         public void makePlaylistReal(String outputFolder) {
             foreach (KeyValuePair<String, String> song in this.playlist) {
-                Console.Write("Copying " + song.Value + "...");
+                Console.WriteLine("Copying " + song.Value + "...");
                 File.Copy(song.Key, Path.Combine(outputFolder, song.Value));
             }
 

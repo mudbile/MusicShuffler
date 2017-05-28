@@ -67,18 +67,6 @@ namespace Music_Shuffler {
             playlist.generatePlaylist(albumsToInclude, outputFolder);
         }
 
-        /// <summary>
-        /// Opens folder dialogue to assist in choosing a root folder
-        /// </summary>
-        public void btnChooseRootClicked(object sender, RoutedEventArgs ev) {
-            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
-                dialog.IsFolderPicker = true;
-                //dialog.Multiselect = true;
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
-                    txtRootFolder.Text = dialog.FileName;
-                }
-            }
-        }
 
         /// <summary>
         /// Opens folder dialogue to assist in choosing an output folder
@@ -127,16 +115,26 @@ namespace Music_Shuffler {
         /// Retrieves albums from root folder and calls populateGUIAlbums to populate gui
         /// </summary>
         public void btnGetAlbumsClicked(object sender, RoutedEventArgs ev) {
-            String rootFolder = txtRootFolder.Text;
-            if (!Directory.Exists(rootFolder)) {
-                MessageBox.Show("Folder does not exist.", "Unable to retrieve albums");
+            List<String> roots = new List<string>();
+
+            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
+                dialog.IsFolderPicker = true;
+                dialog.Multiselect = true;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
+                    roots = dialog.FileNames.ToList();
+                }
+            }
+            if (roots.Count == 0) {
                 return;
             }
+
             //generates albums
-            playlist = new Playlist(rootFolder, musicFileExtensions);
+            playlist = new Playlist(roots, musicFileExtensions);
 
             this.clearGUIAlbums();
             this.populateGUIAlbums();
+
+
         }
 
         public void clearGUIAlbums() {
