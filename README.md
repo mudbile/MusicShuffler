@@ -5,4 +5,25 @@ songs from a bunch of folders, but keep internal ordering for some of them (i.e.
 
 # How to use
 
-In progress
+Start the application and click **GET ALBUMS**. You can select multiple top-level directories and he will dig down 
+into the directory trees to find folders that contain music files. These will be displayed in the list box as albums. 
+
+You can select / deselect which albums to include by right-clicking on them. If it's faded out, the album
+won't be included. 
+
+If you check the **Shuffle** checkbox, you are saying it's okay for this album to be 
+randomised. If you leave this checkbox unchecked, the app will keep internal ordering within that album.
+
+You can click on the dropdown boxes and select which track to start at (useful if you're halfway through an audio book
+or something). This is inclusive, so if you leave it on the album name or on the first item then all the
+track will be included. 
+
+You can either type in or use the folder browser dialogue to configure where you want to store the playlist. 
+
+Once you click **MAKE PLAYLIST** the copying will begin. 
+
+# Special thanks
+
+I found a useful class for providing natural ordering [here](https://www.codeproject.com/Articles/22978/Implementing-the-NET-IComparer-interface-to-get-a)
+	
+
