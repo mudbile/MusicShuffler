@@ -114,10 +114,27 @@ namespace Music_Shuffler {
         /// </summary>
         public void generatePlaylist(List<Album> albumsToInclude, String outputFolder) {
             this.outputFolder = outputFolder;
-            //the albums are already shuffled if they needed to be, so we just keep randomly selecting 
+
+
+            //we just keep randomly selecting 
             //an album and plucking the first song out until all the albums are empty
             //we need a deep copy of the albums list because we're deleting stuff from it
             List<Album> tempAlbumsList = albumsToInclude.Select(album => new Album(album)).ToList();
+
+            //remove entries before the combo selection 
+            foreach (Album album in tempAlbumsList) {
+                //- 2 accounts for mapping from the combobox and the fact that it's inclusive
+                //So 0 -> -2; 1 -> -1; 2 -> 0 (i.e. first will be deleted); 3 -> 1 etc.
+                for (int i = album.cursorIndex - 2; i >= 0; --i) {
+                    album.albumSongs.RemoveAt(i);
+                }
+                //and shuffle if need be
+                if (album.randomiseSongs) {
+                    album.shuffle();
+                } 
+            }
+
+
             int counter = 0;
             int numSongs = tempAlbumsList.Sum(album => album.numSongs());
             String prefixTemplateString = "D" + (Math.Floor(Math.Log10(numSongs)) + 1);

@@ -13,12 +13,16 @@ namespace Music_Shuffler {
         public String albumRoot = "";
         public List<String> albumSongs = new List<string>();
         public bool randomiseSongs = false;
+        public int cursorIndex = 0;
+        //used for natural ordering (e.g. 1 2 10 instead of 1 10 2)
+        private NaturalComparer.NaturalComparer naturalComparer = new NaturalComparer.NaturalComparer();
 
         public Album() { }
 
         public Album(String _albumRoot, List<String> _albumSongs, bool _randomiseSongs) {
             this.albumRoot = _albumRoot;
             this.albumSongs = _albumSongs;
+            this.sort();
             this.randomiseSongs = _randomiseSongs;
         }
 
@@ -27,6 +31,8 @@ namespace Music_Shuffler {
             this.albumRoot = album.albumRoot;
             this.albumSongs = album.albumSongs.ToList();
             this.randomiseSongs = album.randomiseSongs;
+            this.cursorIndex = album.cursorIndex;
+            this.naturalComparer = new NaturalComparer.NaturalComparer();
         }
 
         public int numSongs() {
@@ -38,7 +44,7 @@ namespace Music_Shuffler {
         }
 
         public void sort() {
-            this.albumSongs.Sort();
+            albumSongs.Sort(naturalComparer);
         }
     }
 }

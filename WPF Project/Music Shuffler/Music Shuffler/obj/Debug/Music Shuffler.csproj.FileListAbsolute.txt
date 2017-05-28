@@ -18,4 +18,3 @@ C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Musi
 C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
 C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\MainPage.g.cs
 C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\MainPage.baml
-C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\App.baml

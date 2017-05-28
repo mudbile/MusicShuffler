@@ -52,21 +52,32 @@ namespace Music_Shuffler {
             List<Album> albumsToInclude = new List<Album>();
             foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
                 Album album = albumItem.Tag as Album;
+
+                //check output/input collisions
                 if ((bool)(((Grid)albumItem.Content).Children[0] as CheckBox).IsChecked) {
-                    Console.WriteLine("Added: " + album.albumRoot);
+                    if (Path.GetFullPath(album.albumRoot) == Path.GetFullPath(outputFolder)){
+                        MessageBox.Show("The output directory cannot be an input album:\n" + 
+                                         Path.GetFullPath(album.albumRoot), "Message Shuffler");
+                        return;
+                    }
+
                     albumsToInclude.Add(album);
                     album.randomiseSongs = (bool)(((Grid)albumItem.Content).Children[1] as CheckBox).IsChecked;
-                    Console.WriteLine(album.albumRoot + " shuffled");
-                    if (album.randomiseSongs) {
-                        album.shuffle();
-                    } else {
-                        album.sort();
-                    }
+                    album.cursorIndex = ((((Grid)albumItem.Content).Children[0] as CheckBox).Content as ComboBox).SelectedIndex;
                 }
 
             }
 
+            if (albumsToInclude.Count == 0){
+                MessageBox.Show("No albums selected!", "Message Shuffler");
+                return;
+            } 
+
             playlist.generatePlaylist(albumsToInclude, outputFolder);
+
+
+
+            
         }
 
 
@@ -122,8 +133,6 @@ namespace Music_Shuffler {
 
             this.clearGUIAlbums();
             this.populateGUIAlbums();
-
-
         }
 
         public void clearGUIAlbums() {
@@ -138,6 +147,14 @@ namespace Music_Shuffler {
         /// </summary>
         public void populateGUIAlbums() {
             foreach (Album album in playlist.albums) {
+                //make combo box for each album
+                ComboBox albumCombo = new ComboBox();
+                albumCombo.Items.Add(Path.GetFileName(album.albumRoot));
+                foreach (String songPath in album.albumSongs) {
+                    albumCombo.Items.Add(Path.GetFileName(songPath));
+                }
+                albumCombo.SelectedIndex = 0;
+
                 //Make checkboxes
                 CheckBox includeAlbum = new CheckBox();
                 includeAlbum.Click += (o, e) => {
@@ -145,7 +162,7 @@ namespace Music_Shuffler {
                         chkSelectAll.IsChecked = false;
                     }
                 };
-                includeAlbum.Content = Path.GetFileName(album.albumRoot);
+                includeAlbum.Content = albumCombo;
                 includeAlbum.ToolTip = album.albumRoot;
                 includeAlbum.Style = (Style)Resources["styleCheckbox2"];
 

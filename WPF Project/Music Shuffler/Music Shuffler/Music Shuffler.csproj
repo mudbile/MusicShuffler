@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1B98229A-02B0-465B-B37C-8FD261E3A138}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>Music_Shuffler</RootNamespace>
     <AssemblyName>Music Shuffler</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -66,6 +66,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NaturalComparer.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="MainPage.xaml">

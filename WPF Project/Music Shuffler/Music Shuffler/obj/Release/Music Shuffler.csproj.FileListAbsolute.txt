@@ -1,0 +1,19 @@
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Release\Music Shuffler.exe.config
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Release\Music Shuffler.exe
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Release\Music Shuffler.pdb
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Release\Microsoft.WindowsAPICodePack.dll
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Release\Microsoft.WindowsAPICodePack.xml
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Release\Microsoft.WindowsAPICodePack.Shell.xml
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\MainPage.g.cs
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\MainWindow.g.cs
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\App.g.cs
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\Music Shuffler_MarkupCompile.cache
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\Music Shuffler_MarkupCompile.lref
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\MainPage.baml
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\MainWindow.baml
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\Music Shuffler.g.resources
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\Music_Shuffler.Properties.Resources.resources
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\Music Shuffler.csproj.GenerateResource.Cache
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\Music Shuffler.exe
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Release\Music Shuffler.pdb

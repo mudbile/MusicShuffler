@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Music_Shuffler {
@@ -62,7 +63,7 @@ namespace Music_Shuffler {
         /// </summary>
         public static List<Leaf> FolderWalk(string rootFolder, List<String> validExtensions) {
             List<Leaf> leaves = new List<Leaf>();
-  
+
             //make folders a list (dynamic) because we need to add the rootFolder
             List<String> folders = Directory.GetDirectories(rootFolder).ToList();
             folders.Add(rootFolder);

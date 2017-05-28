@@ -1,8 +1,6 @@
 TODO
 
 
-Add wait screen on copy
-
 Add startAtIndex and countLimit to each album
 
-
+turn them into combo boxes 
