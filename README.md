@@ -4,7 +4,7 @@ I have an mp3 player that doesn't shuffle and doesn't allow subdirectories. I wa
 songs from a bunch of folders, but keep internal ordering for some of them (i.e. podcast segments and audiobooks).
 
 It started out as a small python prototype but I wanted a GUI so it's a WPF application- you can just download the
-"Music Shuffler" executable and run it (or, if you want to, you dig down to the bin/release folder and grab the latest build).
+"Music Shuffler" executable and run it (or, if you want to, you can dig down to the bin/release folder and grab the latest build).
 
 
 # How to use
@@ -28,7 +28,7 @@ randomised. If you leave this checkbox unchecked, the app will keep internal ord
 
 You can click on the dropdown boxes and select which track to start at (useful if you're halfway through an audio book
 or something). This is inclusive, so if you leave it on the album name or on the first item then all the
-track will be included. 
+tracks will be included. 
 
 You can either type in or use the folder browser dialogue to configure where you want to store the playlist. 
 
@@ -44,7 +44,7 @@ Afterwards, you have your playlist in the folder you chose:
 ![Screenshot_4.png](/screenshots/Screenshot_4.png)
 
 
-# Special thanks
+# Thanks
 
 I found a useful class for providing natural ordering [here](https://www.codeproject.com/Articles/22978/Implementing-the-NET-IComparer-interface-to-get-a).
 
