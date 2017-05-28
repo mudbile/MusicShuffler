@@ -26,6 +26,7 @@ namespace Music_Shuffler {
         BackgroundWorker bw; //handles the copying of files
         TextBox messageBox;
         ListBox lstBox;
+        Button btnCancel;
 
         public Playlist(List<String> _rootFolders, List<String> _musicExtensions) {
             this.rootFolders = _rootFolders;
@@ -34,13 +35,44 @@ namespace Music_Shuffler {
 
             messageBox = (Application.Current.MainWindow.Content as MainPage).txtMessageBlock;
             lstBox = (Application.Current.MainWindow.Content as MainPage).lstbxAlbums;
-
+            btnCancel = (Application.Current.MainWindow.Content as MainPage).btnCancel;
+            btnCancel.Click += (o, e) => {
+                btnCancel.Content = "Stopping...";
+                btnCancel.IsEnabled = false;
+                bw.CancelAsync();
+            };
             bw = new BackgroundWorker();
-            bw.WorkerSupportsCancellation = false;
+            bw.WorkerSupportsCancellation = true;
             bw.WorkerReportsProgress = true;
             bw.DoWork += new DoWorkEventHandler(bwCopyFiles);
             bw.ProgressChanged += new ProgressChangedEventHandler(bwUpdateText);
+            bw.RunWorkerCompleted += bwRunWorkerCompleted;
         }
+
+        void bwRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            playlist.Clear();
+            if (e.Cancelled) {
+                MessageBox.Show("Some files were not copied.", "Music Shuffler");
+                messageBox.Text += "Cancelled!\n\n";
+            } else {
+                messageBox.Text += "Finished!\n\n";
+                MessageBox.Show("Playlist created!", "Music Shuffler");
+            }
+            
+            messageBox.Visibility = Visibility.Hidden;
+            lstBox.Visibility = Visibility.Visible;
+            btnCancel.Visibility = Visibility.Hidden;
+            btnCancel.Content = "Stop";
+            btnCancel.IsEnabled = true;
+            (Application.Current.MainWindow.Content as MainPage).btnChooseOutput.IsEnabled = true;
+            (Application.Current.MainWindow.Content as MainPage).btnGetAlbums.IsEnabled = true;
+            (Application.Current.MainWindow.Content as MainPage).btnMakePlaylist.IsEnabled = true;
+            (Application.Current.MainWindow.Content as MainPage).txtOutputFolder.IsEnabled = true;
+            (Application.Current.MainWindow.Content as MainPage).chkSelectAll.IsEnabled = true;
+            (Application.Current.MainWindow.Content as MainPage).chkShuffleAll.IsEnabled = true;
+           
+        }
+
 
         /// <summary>
         /// Is called when makePlaylistReal calls bw.RunWorkerAsync();
@@ -48,35 +80,17 @@ namespace Music_Shuffler {
         /// to update the text box. Also clears the playlist after its finished
         /// </summary>
         private void bwCopyFiles(object sender, DoWorkEventArgs e) {
-            Application.Current.Dispatcher.Invoke(() => {
-                messageBox.Visibility = Visibility.Visible;
-                lstBox.Visibility = Visibility.Hidden;
-                (Application.Current.MainWindow.Content as MainPage).btnChooseOutput.IsEnabled = false;
-                (Application.Current.MainWindow.Content as MainPage).btnGetAlbums.IsEnabled = false;
-                (Application.Current.MainWindow.Content as MainPage).btnMakePlaylist.IsEnabled = false;
-                (Application.Current.MainWindow.Content as MainPage).txtOutputFolder.IsEnabled = false;
-                (Application.Current.MainWindow.Content as MainPage).chkSelectAll.IsEnabled = false;
-                (Application.Current.MainWindow.Content as MainPage).chkShuffleAll.IsEnabled = false;
-            });
             bw.ReportProgress(0, "Preparing to copy to " + this.outputFolder + "...");
             foreach (KeyValuePair<String, String> song in this.playlist) {
                 String modifiedPath = Path.Combine(this.outputFolder, this.playlist[song.Key]);
                 File.Copy(song.Key, modifiedPath);
                 bw.ReportProgress(0, song.Value);
+                if (bw.CancellationPending) {
+                    e.Cancel = true;
+                    return;
+                }
             }
-            playlist.Clear();
-            Application.Current.Dispatcher.Invoke(() => {
-                bw.ReportProgress(0, "Finished!");
-                MessageBox.Show("Playlist created!", "Music Shuffler");
-                messageBox.Visibility = Visibility.Hidden;
-                lstBox.Visibility = Visibility.Visible;
-                (Application.Current.MainWindow.Content as MainPage).btnChooseOutput.IsEnabled = true;
-                (Application.Current.MainWindow.Content as MainPage).btnGetAlbums.IsEnabled = true;
-                (Application.Current.MainWindow.Content as MainPage).btnMakePlaylist.IsEnabled = true;
-                (Application.Current.MainWindow.Content as MainPage).txtOutputFolder.IsEnabled = true;
-                (Application.Current.MainWindow.Content as MainPage).chkSelectAll.IsEnabled = true;
-                (Application.Current.MainWindow.Content as MainPage).chkShuffleAll.IsEnabled = true;
-            });
+            
             
         }
 
@@ -160,6 +174,15 @@ namespace Music_Shuffler {
         /// </summary>
         public void makePlaylistReal() {
             if (bw.IsBusy != true) {
+                messageBox.Visibility = Visibility.Visible;
+                lstBox.Visibility = Visibility.Hidden;
+                btnCancel.Visibility = Visibility.Visible;
+                (Application.Current.MainWindow.Content as MainPage).btnChooseOutput.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).btnGetAlbums.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).btnMakePlaylist.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).txtOutputFolder.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).chkSelectAll.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).chkShuffleAll.IsEnabled = false;
                 bw.RunWorkerAsync();
             }
         }
