@@ -1,0 +1,14 @@
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Debug\Music Shuffler.exe.config
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Debug\Music Shuffler.exe
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\bin\Debug\Music Shuffler.pdb
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\Music Shuffler.csprojResolveAssemblyReference.cache
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\MainWindow.g.cs
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\App.g.cs
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\Music Shuffler_MarkupCompile.cache
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\Music Shuffler_MarkupCompile.lref
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\MainWindow.baml
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\Music Shuffler.g.resources
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\Music_Shuffler.Properties.Resources.resources
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\Music Shuffler.csproj.GenerateResource.Cache
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\Music Shuffler.exe
+C:\SYNC FOLDER\Programming\python\Music Shuffler\music_shuffler\WPF Project\Music Shuffler\Music Shuffler\obj\Debug\Music Shuffler.pdb

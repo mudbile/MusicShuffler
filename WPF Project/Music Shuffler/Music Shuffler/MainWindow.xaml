@@ -1,0 +1,52 @@
+﻿<Window x:Class="Music_Shuffler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Music_Shuffler"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Margin="20px">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<TextBox Name="txtRootFolder" Grid.Column="0" ToolTip="Enter root folder"/>
+			<Button Name="btnGetAlbums" Grid.Column="1">Get Albums</Button>
+		</Grid>
+		<ListBox Grid.Row="1" HorizontalContentAlignment="Stretch">
+			<ListBoxItem>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock>Folder Name</TextBlock>
+					<CheckBox Grid.Column="1">Shuffle</CheckBox>
+				</Grid>
+			</ListBoxItem>
+		</ListBox>
+
+		<Grid Grid.Row="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<TextBox Name="txtOutputFolder" Grid.Column="0" ToolTip="Enter output folder"/>
+			<Button Name="btnMakePlaylist" Grid.Column="1">Make Playlist</Button>
+		</Grid>
+
+
+
+		
+	</Grid>
+</Window>
