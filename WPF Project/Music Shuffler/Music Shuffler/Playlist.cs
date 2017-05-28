@@ -37,18 +37,18 @@ namespace Music_Shuffler {
             }
         }
 
-        public void generatePlaylist(List<Album> albumsToInclude = null, String outputFolder = "") {
-            if (albumsToInclude == null) {
-                albumsToInclude = this.albums;
-            }
-
-            //we need a deep copy because ww're deleting stuff from it
+        /// <summary>
+        /// randomises songs from all albums - songs maintain order with respect to their album
+        /// and copies the resultant playlist to the outputFolder
+        /// </summary>
+        public void generatePlaylist(List<Album> albumsToInclude, String outputFolder) {
+            //the albums are already shuffled if they needed to be, so we just keep randomly selecting 
+            //an album and plucking the first song out until all the albums are empty
+            //we need a deep copy of the albums list because we're deleting stuff from it
             List<Album> tempAlbumsList = albumsToInclude.Select(album => new Album(album)).ToList();
-
             int counter = 0;
             int numSongs = tempAlbumsList.Sum(album => album.numSongs());
             String prefixTemplateString = "D" + (Math.Floor(Math.Log10(numSongs)) + 1);
-            
             while (tempAlbumsList.Count != 0) {
                 int index = Utils.randomGenerator.Next(tempAlbumsList.Count);
                 List<String> albumSongsLeft = tempAlbumsList[index].albumSongs;
@@ -62,16 +62,19 @@ namespace Music_Shuffler {
                 ++counter;
             }
 
+            //actually copy the files and reset the playlist
             makePlaylistReal(outputFolder);
             playlist.Clear();
         }
 
+        /// <summary>
+        /// Copy the files
+        /// </summary>
         public void makePlaylistReal(String outputFolder) {
             foreach (KeyValuePair<String, String> song in this.playlist) {
                 Console.WriteLine("Copying " + song.Value + "...");
                 File.Copy(song.Key, Path.Combine(outputFolder, song.Value));
             }
-
         }
     }
 }

@@ -30,6 +30,7 @@ namespace Music_Shuffler {
         /// Actually copies the music files
         /// </summary>
         public void btnMakePlaylistClicked(object sender, RoutedEventArgs ev) {
+            //Make sure the directory is all G
             String outputFolder = txtOutputFolder.Text;
             if (outputFolder == "") {
                 MessageBox.Show("Output Folder required", "Unable to make playlist");
@@ -47,8 +48,8 @@ namespace Music_Shuffler {
                 }
             }
 
+            //Weed out the albums that aren't ticked to be included and randomise/sort the rest
             List<Album> albumsToInclude = new List<Album>();
-
             foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
                 Album album = albumItem.Tag as Album;
                 if ((bool)(((Grid)albumItem.Content).Children[0] as CheckBox).IsChecked) {
@@ -64,6 +65,7 @@ namespace Music_Shuffler {
                 }
                 
             }
+            
             playlist.generatePlaylist(albumsToInclude, outputFolder);
         }
 
