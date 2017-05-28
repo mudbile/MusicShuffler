@@ -12,7 +12,7 @@ namespace Music_Shuffler {
     class Album {
         public String albumRoot = "";
         public List<String> albumSongs = new List<string>();
-        bool randomiseSongs = false;
+        public bool randomiseSongs = false;
 
         public Album() { }
 
@@ -26,8 +26,19 @@ namespace Music_Shuffler {
             }
         }
 
-        int numSongs() {
+        //Deep clone copy constructor
+        public Album(Album album) {
+            this.albumRoot = album.albumRoot;
+            this.albumSongs = album.albumSongs;
+            this.randomiseSongs = album.randomiseSongs;
+        }
+
+        public int numSongs() {
             return this.albumSongs.Count;
+        }
+
+        public void shuffle() {
+            Utils.ShuffleList(this.albumSongs);
         }
     }
 }

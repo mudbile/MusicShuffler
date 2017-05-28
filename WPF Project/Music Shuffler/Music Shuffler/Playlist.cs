@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Music_Shuffler;
+using System.IO;
 
 namespace Music_Shuffler {
     /// <summary>
@@ -14,7 +15,7 @@ namespace Music_Shuffler {
     class Playlist {
         public String rootFolder = "";
         public List<Album> albums = new List<Album>();
-        public List<String> playlist = new List<string>();
+        public Dictionary<String, String> playlist = new Dictionary<String, String>();
         public List<String> musicExtensions = new List<string>();
 
         public Playlist(String _rootFolder, List<String> _musicExtensions) {
@@ -24,11 +25,8 @@ namespace Music_Shuffler {
             this.generatePlaylist();
 
             //testing print loop
-            foreach (Album album in this.albums) {
-                Console.WriteLine(album.albumRoot);
-                foreach (String song in album.albumSongs) {
-                    Console.WriteLine("\t" + song);
-                }
+            foreach (String song in playlist.Keys) {
+                Console.WriteLine(song);
             }
         }
 
@@ -44,7 +42,28 @@ namespace Music_Shuffler {
         }
 
         public void generatePlaylist() {
-            //do nothing yet
+            foreach (Album album in this.albums) {
+                if (album.randomiseSongs) {
+                    album.shuffle();
+                }
+            }
+
+            //we need a full copy because we pull out songs until each album is empty
+            List<Album> deepCopyOfAlbums = albums.ConvertAll(album => new Album(album));
+            int counter = 0;
+            String prefixTemplateString = "D" + albums.Sum(album => album.numSongs()) / 10 + 1;
+
+            while (deepCopyOfAlbums.Count != 0) {
+                int index = Utils.randomGenerator.Next(deepCopyOfAlbums.Count);
+                List<String> albumSongsLeft = deepCopyOfAlbums[index].albumSongs;
+                String originalSong = albumSongsLeft.First();
+                playlist[originalSong] = counter.ToString(prefixTemplateString) + " - " + Path.GetFileName(originalSong);
+                albumSongsLeft.Remove(originalSong);
+                if (albumSongsLeft.Count == 0) {
+                    deepCopyOfAlbums.Remove(deepCopyOfAlbums[index]);
+                }
+                ++counter;
+            }
         }
     }
 }

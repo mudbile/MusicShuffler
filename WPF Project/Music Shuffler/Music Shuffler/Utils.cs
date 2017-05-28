@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 
 namespace Music_Shuffler {
     /// <summary>
-    /// Small class for storing a folder path and some file paths within that folder
+    /// Small class for storing a folder path and some file paths within that folder.
+    /// Stores the full file paths for the folder and the files
     /// </summary>
     class Leaf {
         public String root = "";
         public List<String> files = new List<string>();
         public Leaf() { }
+        
         public Leaf(String _root, List<String> _files) {
-            this.root = _root;
+            //Normalise the path formats
+            this.root = Path.GetFullPath(_root);
+            for (int i = 0; i != _files.Count; ++i) {
+                 _files[i] = Path.GetFullPath(_files[i]);
+            }
             this.files = _files;
         }
     }
@@ -22,12 +28,14 @@ namespace Music_Shuffler {
 
 
     static class Utils {
+        public static Random randomGenerator = new Random();
+
         /// <summary>
         /// Shuffle a list -> just a simple fisher yates, no need for heaps of randomness
         /// </summary>
         static public void ShuffleList<T>(List<T> pool) {
             for (int randIndex, thisIndex = 0; thisIndex < pool.Count; ++thisIndex) {
-                randIndex = new Random().Next(thisIndex + 1);
+                randIndex = randomGenerator.Next(thisIndex + 1);
                 T temp = pool[randIndex];
                 pool[randIndex] = pool[thisIndex];
                 pool[thisIndex] = temp;
