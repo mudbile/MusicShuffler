@@ -1,5 +1,9 @@
 TODO
 
+Add folder picker
+
 Discriminate between folders that keep order and folders that don't - maybe by some folder prefix
 	* when the GUI comes, it will be a checkbox or something
 	* at the moment they're either all randomised or all non-randomised
+	
+Add startAtIndex and countLimit to each album
