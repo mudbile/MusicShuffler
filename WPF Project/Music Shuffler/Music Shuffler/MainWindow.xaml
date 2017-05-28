@@ -9,6 +9,7 @@
     <Grid Margin="20px">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
@@ -25,11 +26,25 @@
 			<Button Name="btnChooseRoot" Grid.Column="1" Click="btnChooseRootClicked">. . .</Button>
 			<Button Name="btnGetAlbums" Grid.Column="2" Click="btnGetAlbumsClicked">Get Albums</Button>
 		</Grid>
-		<ListBox Name="lstbxAlbums" Grid.Row="1" HorizontalContentAlignment="Stretch">
+		<Grid Grid.Row="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Button Name="btnSelectAll" Grid.Row="0" Grid.Column="0" Click="btnSelectAllClicked">Select All</Button>
+			<Button Name="btnSelectNone" Grid.Row="1" Grid.Column="0" Click="btnSelectNoneClicked">Select None</Button>
+			<Button Name="btnShuffleAll" Grid.Row="0" Grid.Column="1" Click="btnShuffleAllClicked">Shuffle All</Button>
+			<Button Name="btnShuffleNone" Grid.Row="1" Grid.Column="1" Click="btnShuffleNoneClicked">Shuffle None</Button>
+		</Grid>
+		<ListBox Name="lstbxAlbums" Grid.Row="2" HorizontalContentAlignment="Stretch">
 			
 		</ListBox>
 
-		<Grid Grid.Row="2">
+		<Grid Grid.Row="3">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="2*"/>
 				<ColumnDefinition Width="*"/>

@@ -26,8 +26,10 @@ namespace Music_Shuffler {
         }
 
 
-
-        public void btnMakePlaylistClicked(object sender, RoutedEventArgs e) {
+        /// <summary>
+        /// Actually copies the music files
+        /// </summary>
+        public void btnMakePlaylistClicked(object sender, RoutedEventArgs ev) {
             foreach (Album album in playlist.albums) {
                 if (album.randomiseSongs) {
                     album.shuffle();
@@ -36,9 +38,11 @@ namespace Music_Shuffler {
 
             //etc
         }
-            
 
-        public void btnChooseRootClicked(object sender, RoutedEventArgs e) {
+        /// <summary>
+        /// Opens folder dialogue to assist in choosing a root folder
+        /// </summary>
+        public void btnChooseRootClicked(object sender, RoutedEventArgs ev) {
             using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
                 dialog.IsFolderPicker = true;
                 if (dialog.ShowDialog() != CommonFileDialogResult.Ok) {
@@ -48,11 +52,43 @@ namespace Music_Shuffler {
             }
         }
 
-            
-        public void btnGetAlbumsClicked(object sender, RoutedEventArgs eevent) {
+        /***********************************************************************************************/
+        /*       Select All / Select None         and         Shuffle All / Shuffle None               */
+        /***********************************************************************************************/
+        public void btnSelectNoneClicked(object sender, RoutedEventArgs ev) {
+            setAllAlbumsSelectedTo(false);
+        }
+        public void btnSelectAllClicked(object sender, RoutedEventArgs ev) {
+            setAllAlbumsSelectedTo(true);
+        }
+        private void setAllAlbumsSelectedTo(bool isSelected) {
+            foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
+                (((Grid)albumItem.Content).Children[0] as CheckBox).IsChecked = isSelected;
+            }
+        }
+
+        public void btnShuffleNoneClicked(object sender, RoutedEventArgs ev) {
+            setAllAlbumsShuffledTo(false);
+        }
+        public void btnShuffleAllClicked(object sender, RoutedEventArgs ev) {
+            setAllAlbumsShuffledTo(true);
+        }
+        private void setAllAlbumsShuffledTo(bool isShuffled) {
+            foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
+                (((Grid)albumItem.Content).Children[1] as CheckBox).IsChecked = isShuffled;
+            }
+        }
+        /***********************************************************************************************/
+        /***********************************************************************************************/
+
+
+        /// <summary>
+        /// Retrieves albums from root folder and calls populateGUIAlbums to populate gui
+        /// </summary>
+        public void btnGetAlbumsClicked(object sender, RoutedEventArgs ev) {
             String rootFolder = txtRootFolder.Text;
             if (!Directory.Exists(rootFolder)) {
-                MessageBox.Show("Folder does not exist");
+                MessageBox.Show("Folder does not exist.", "Unable to retrieve albums");
                 return;
             }
             //generates albums
@@ -66,6 +102,11 @@ namespace Music_Shuffler {
             lstbxAlbums.Items.Clear();
         }
 
+
+        /// <summary>
+        /// creates a GUI element for each album and populates 
+        /// the list box lstbxAlbums with them
+        /// </summary>
         public void populateGUIAlbums() {
             foreach (Album album in playlist.albums) {
                 //Make checkboxes
