@@ -40,16 +40,30 @@ namespace Music_Shuffler {
         }
 
         /// <summary>
-        /// Opens folder dialogue to assist in choosing a root folder
+        /// Returns a folder path from a dialoge
         /// </summary>
-        public void btnChooseRootClicked(object sender, RoutedEventArgs ev) {
+        public String getFolderPathFromDialogue() {
             using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
                 dialog.IsFolderPicker = true;
                 if (dialog.ShowDialog() != CommonFileDialogResult.Ok) {
-                    return;
+                    return "";
                 }
-                txtRootFolder.Text = dialog.FileName;
+                return dialog.FileName;
             }
+        }
+
+        /// <summary>
+        /// Opens folder dialogue to assist in choosing a root folder
+        /// </summary>
+        public void btnChooseRootClicked(object sender, RoutedEventArgs ev) {
+            txtRootFolder.Text = getFolderPathFromDialogue();
+        }
+
+        /// <summary>
+        /// Opens folder dialogue to assist in choosing an output folder
+        /// </summary>
+        public void btnChooseOutputClicked(object sender, RoutedEventArgs ev) {
+            txtOutputFolder.Text = getFolderPathFromDialogue();
         }
 
         /***********************************************************************************************/

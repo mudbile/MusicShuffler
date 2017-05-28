@@ -47,10 +47,12 @@
 		<Grid Grid.Row="3">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="auto"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 			<TextBox Name="txtOutputFolder" Grid.Column="0" ToolTip="Enter output folder"/>
-			<Button Name="btnMakePlaylist" Grid.Column="1">Make Playlist</Button>
+			<Button Name="btnChooseOutput" Grid.Column="1" Click="btnChooseOutputClicked">. . .</Button>
+			<Button Name="btnMakePlaylist" Grid.Column="2">Make Playlist</Button>
 		</Grid>
 
 
