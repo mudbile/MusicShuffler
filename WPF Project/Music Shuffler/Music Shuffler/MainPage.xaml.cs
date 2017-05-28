@@ -76,10 +76,9 @@ namespace Music_Shuffler {
         public void btnChooseOutputClicked(object sender, RoutedEventArgs ev) {
             using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
                 dialog.IsFolderPicker = true;
-                if (dialog.ShowDialog() != CommonFileDialogResult.Ok) {
-                    txtOutputFolder.Text = "";
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
+                    txtOutputFolder.Text = dialog.FileName;
                 }
-                txtOutputFolder.Text = dialog.FileName;
             }
         }
 
@@ -148,6 +147,7 @@ namespace Music_Shuffler {
                 };
                 includeAlbum.Content = Path.GetFileName(album.albumRoot);
                 includeAlbum.ToolTip = album.albumRoot;
+                includeAlbum.Style = (Style)Resources["styleCheckbox2"];
 
                 CheckBox shuffleAlbum = new CheckBox();
                 shuffleAlbum.Click += (o, e) => {
@@ -157,6 +157,7 @@ namespace Music_Shuffler {
                 };
                 shuffleAlbum.Content = "Shuffle";
                 shuffleAlbum.HorizontalAlignment = HorizontalAlignment.Right;
+                shuffleAlbum.Style = (Style)Resources["styleCheckbox2"];
 
                 //shuffle checkbox will not be enabled when the album is not being included
                 Binding shuffletoIncludeAlbumBinding = new Binding();

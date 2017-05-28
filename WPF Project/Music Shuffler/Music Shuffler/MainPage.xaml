@@ -5,9 +5,42 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Music_Shuffler"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Title="Music Shuffler">
+      d:DesignHeight="350" d:DesignWidth="525"
+      Title="Music Shuffler"
+	  Background="SkyBlue">
 
+	<Page.Resources>
+		<Style x:Key="styleTextBox" TargetType="{x:Type TextBox}">
+			<Setter Property="FontSize" Value="20"/>
+		</Style>
+		<Style x:Key="styleButton" TargetType="{x:Type Button}">
+			<Setter Property="Margin" Value="5 5 5 5"/>
+			<Setter Property="Padding" Value="10 0 10 0"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="FontFamily" Value="Stencil"/>
+		</Style>
+		<Style x:Key="styleButton2" TargetType="{x:Type Button}">
+			<Setter Property="Margin" Value="0"/>
+			<Setter Property="Padding" Value="10 0 10 0"/>
+			<Setter Property="FontFamily" Value="Stencil"/>
+			<Setter Property="FontSize" Value="15"/>
+		</Style>
+		<Style x:Key="styleCheckbox" TargetType="{x:Type CheckBox}">
+			<Setter Property="Margin" Value="5 5 5 5"/>
+			<Setter Property="Padding" Value="10 0 40 0"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="FontFamily" Value="Britannic Bold"/>
+		</Style>
+		<Style x:Key="styleCheckbox2" TargetType="{x:Type CheckBox}">
+			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+		</Style>
+	</Page.Resources>
 	<Grid Margin="20px">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto"/>
@@ -27,9 +60,9 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<CheckBox Name="chkSelectAll" Grid.Row="0" Grid.Column="0" Click="chkSelectAllClicked">Select All</CheckBox>
-			<Button Name="btnGetAlbums" Grid.Row="0" Grid.Column="1" Click="btnGetAlbumsClicked">Get Albums</Button>
-			<CheckBox Name="chkShuffleAll" Grid.Row="0" Grid.Column="2" Click="chkShuffleAllClicked" HorizontalAlignment="Right">Shuffle All</CheckBox>
+			<CheckBox Name="chkSelectAll" Grid.Row="0" Grid.Column="0" Click="chkSelectAllClicked" Style="{StaticResource styleCheckbox}">Select All</CheckBox>
+			<Button Name="btnGetAlbums" Grid.Row="0" Grid.Column="1" Click="btnGetAlbumsClicked" Style="{StaticResource styleButton}">Get Albums</Button>
+				<CheckBox Name="chkShuffleAll" Grid.Row="0" Grid.Column="2" Click="chkShuffleAllClicked" Style="{StaticResource styleCheckbox}">Shuffle All</CheckBox>
 		</Grid>
 		<ListBox Name="lstbxAlbums" Grid.Row="1" HorizontalContentAlignment="Stretch">
 
@@ -41,9 +74,9 @@
 				<ColumnDefinition Width="auto"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<TextBox Name="txtOutputFolder" Grid.Column="0" ToolTip="Enter output folder"/>
-			<Button Name="btnChooseOutput" Grid.Column="1" Click="btnChooseOutputClicked">. . .</Button>
-			<Button Name="btnMakePlaylist" Grid.Column="2" Click="btnMakePlaylistClicked">Make Playlist</Button>
+			<TextBox Name="txtOutputFolder" Grid.Column="0" ToolTip="Enter output folder" Style="{StaticResource styleTextBox}"/>
+			<Button Name="btnChooseOutput" Grid.Column="1" Click="btnChooseOutputClicked" Style="{StaticResource styleButton2}">. . .</Button>
+			<Button Name="btnMakePlaylist" Grid.Column="2" Click="btnMakePlaylistClicked" Style="{StaticResource styleButton2}">Make Playlist</Button>
 		</Grid>
 
 

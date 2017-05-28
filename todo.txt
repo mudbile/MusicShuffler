@@ -1,9 +1,8 @@
 TODO
 
-Add startAtIndex and countLimit to each album
 
 Add wait screen on copy
 
-move to pages
+Add startAtIndex and countLimit to each album
 
-replace any/all with checkboxes
+
