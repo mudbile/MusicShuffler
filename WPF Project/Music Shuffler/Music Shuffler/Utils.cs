@@ -44,7 +44,7 @@ namespace Music_Shuffler {
 
 
         /// <summary>
-        /// Walks down a directory tree from rootFolder (inclusive) and returns a list of Leaf objects 
+        /// Walks down multiple directory trees (inclusive) and returns a list of Leaf objects 
         /// for those folders that contain at least one file with a validExtensions extensions
         /// </summary>
         public static List<Leaf> FolderWalk(List<String> rootFolders, List<String> validExtensions) {
@@ -56,11 +56,11 @@ namespace Music_Shuffler {
         }
 
 
-            /// <summary>
-            /// Walks down a directory tree from rootFolder (inclusive) and returns a list of Leaf objects 
-            /// for those folders that contain at least one file with a validExtensions extensions
-            /// </summary>
-            public static List<Leaf> FolderWalk(string rootFolder, List<String> validExtensions) {
+        /// <summary>
+        /// Walks down a single directory tree from rootFolder (inclusive) and returns a list of Leaf objects 
+        /// for those folders that contain at least one file with a validExtensions extensions
+        /// </summary>
+        public static List<Leaf> FolderWalk(string rootFolder, List<String> validExtensions) {
             List<Leaf> leaves = new List<Leaf>();
   
             //make folders a list (dynamic) because we need to add the rootFolder

@@ -1,0 +1,53 @@
+﻿<Page x:Class="Music_Shuffler.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Music_Shuffler"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="Music Shuffler">
+
+	<Grid Margin="20px">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<CheckBox Name="chkSelectAll" Grid.Row="0" Grid.Column="0" Click="chkSelectAllClicked">Select All</CheckBox>
+			<Button Name="btnGetAlbums" Grid.Row="0" Grid.Column="1" Click="btnGetAlbumsClicked">Get Albums</Button>
+			<CheckBox Name="chkShuffleAll" Grid.Row="0" Grid.Column="2" Click="chkShuffleAllClicked" HorizontalAlignment="Right">Shuffle All</CheckBox>
+		</Grid>
+		<ListBox Name="lstbxAlbums" Grid.Row="1" HorizontalContentAlignment="Stretch">
+
+		</ListBox>
+
+		<Grid Grid.Row="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<TextBox Name="txtOutputFolder" Grid.Column="0" ToolTip="Enter output folder"/>
+			<Button Name="btnChooseOutput" Grid.Column="1" Click="btnChooseOutputClicked">. . .</Button>
+			<Button Name="btnMakePlaylist" Grid.Column="2" Click="btnMakePlaylistClicked">Make Playlist</Button>
+		</Grid>
+
+
+
+
+	</Grid>
+</Page>
