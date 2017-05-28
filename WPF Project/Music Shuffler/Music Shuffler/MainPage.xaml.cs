@@ -100,7 +100,13 @@ namespace Music_Shuffler {
         /***********************************************************************************************/
         public void chkSelectAllClicked(object sender, RoutedEventArgs ev) {
             foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
-                (((Grid)albumItem.Content).Children[0] as ComboBox).IsEnabled = (bool)chkSelectAll.IsChecked;
+                ComboBox box = (((Grid)albumItem.Content).Children[0] as ComboBox);
+                box.IsEnabled = (bool)chkSelectAll.IsChecked;
+                if (!(bool)box.IsEnabled) {
+                    box.Foreground = Brushes.Gray;
+                } else {
+                    box.Foreground = Brushes.Black;
+                }
             }
         }
         public void chkShuffleAllClicked(object sender, RoutedEventArgs ev) {
@@ -195,9 +201,13 @@ namespace Music_Shuffler {
                 albumItem.Content = albumGrid;
                 albumItem.Tag = album;
                 albumItem.MouseRightButtonUp += (o, e) => {
-                    albumCombo.IsEnabled = !(bool)albumCombo.IsEnabled;
-                    if (!(bool)albumCombo.IsEnabled) {
-                        chkSelectAll.IsChecked = false;
+                    if ((bool)albumCombo.IsEnabled) {
+                       albumCombo.IsEnabled = false;
+                       albumCombo.Foreground = Brushes.Gray;
+                       chkSelectAll.IsChecked = false;
+                    } else {
+                        albumCombo.IsEnabled = true;
+                        albumCombo.Foreground = Brushes.Black;
                     }
                 };
 
