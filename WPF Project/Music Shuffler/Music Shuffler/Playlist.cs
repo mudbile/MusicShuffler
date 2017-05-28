@@ -22,7 +22,7 @@ namespace Music_Shuffler {
             this.rootFolder = _rootFolder;
             this.musicExtensions = _musicExtensions;
             this.generateAlbums();
-            this.generatePlaylist();
+
 
             //testing print loop
             foreach (String song in playlist.Keys) {

@@ -25,17 +25,8 @@
 			<Button Name="btnChooseRoot" Grid.Column="1" Click="btnChooseRootClicked">. . .</Button>
 			<Button Name="btnGetAlbums" Grid.Column="2" Click="btnGetAlbumsClicked">Get Albums</Button>
 		</Grid>
-		<ListBox Grid.Row="1" HorizontalContentAlignment="Stretch">
-			<ListBoxItem>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="2*"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<CheckBox>Album Name</CheckBox>
-					<CheckBox Grid.Column="1">Shuffle</CheckBox>
-				</Grid>
-			</ListBoxItem>
+		<ListBox Name="lstbxAlbums" Grid.Row="1" HorizontalContentAlignment="Stretch">
+			
 		</ListBox>
 
 		<Grid Grid.Row="2">

@@ -20,10 +20,6 @@ namespace Music_Shuffler {
             this.albumRoot = _albumRoot;
             this.albumSongs = _albumSongs;
             this.randomiseSongs = _randomiseSongs;
-            //Move this until when the user clicks to make playlist afte rselecting which to shuffle
-            if (this.randomiseSongs) {
-                Utils.ShuffleList(albumSongs);
-            }
         }
 
         //Deep clone copy constructor
