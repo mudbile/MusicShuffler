@@ -25,7 +25,7 @@ namespace Music_Shuffler {
         //Deep clone copy constructor
         public Album(Album album) {
             this.albumRoot = album.albumRoot;
-            this.albumSongs = album.albumSongs;
+            this.albumSongs = album.albumSongs.ToList();
             this.randomiseSongs = album.randomiseSongs;
         }
 
@@ -35,6 +35,10 @@ namespace Music_Shuffler {
 
         public void shuffle() {
             Utils.ShuffleList(this.albumSongs);
+        }
+
+        public void sort() {
+            this.albumSongs.Sort();
         }
     }
 }

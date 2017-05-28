@@ -17,17 +17,12 @@ namespace Music_Shuffler {
         public List<Album> albums = new List<Album>();
         public Dictionary<String, String> playlist = new Dictionary<String, String>();
         public List<String> musicExtensions = new List<string>();
+        public String outputFolder = "";
 
         public Playlist(String _rootFolder, List<String> _musicExtensions) {
             this.rootFolder = _rootFolder;
             this.musicExtensions = _musicExtensions;
             this.generateAlbums();
-
-
-            //testing print loop
-            foreach (String song in playlist.Keys) {
-                Console.WriteLine(song);
-            }
         }
 
         /// <summary>
@@ -35,35 +30,47 @@ namespace Music_Shuffler {
         /// Eahc album is initially set to stay sorted
         /// </summary>
         public void generateAlbums() {
+            this.albums.Clear();
             List<Leaf> leaves = Utils.FolderWalk(this.rootFolder, this.musicExtensions);
             foreach (Leaf leaf in leaves) {
                 this.albums.Add(new Album(leaf.root, leaf.files, _randomiseSongs: false));
             }
         }
 
-        public void generatePlaylist() {
-            foreach (Album album in this.albums) {
-                if (album.randomiseSongs) {
-                    album.shuffle();
-                }
+        public void generatePlaylist(List<Album> albumsToInclude = null, String outputFolder = "") {
+            if (albumsToInclude == null) {
+                albumsToInclude = this.albums;
             }
 
-            //we need a full copy because we pull out songs until each album is empty
-            List<Album> deepCopyOfAlbums = albums.ConvertAll(album => new Album(album));
-            int counter = 0;
-            String prefixTemplateString = "D" + albums.Sum(album => album.numSongs()) / 10 + 1;
+            //we need a deep copy because ww're deleting stuff from it
+            List<Album> tempAlbumsList = albumsToInclude.Select(album => new Album(album)).ToList();
 
-            while (deepCopyOfAlbums.Count != 0) {
-                int index = Utils.randomGenerator.Next(deepCopyOfAlbums.Count);
-                List<String> albumSongsLeft = deepCopyOfAlbums[index].albumSongs;
+            int counter = 0;
+            String prefixTemplateString = "D" + (Math.Log10(tempAlbumsList.Sum(album => album.numSongs()) + 1));
+            
+            while (tempAlbumsList.Count != 0) {
+                int index = Utils.randomGenerator.Next(tempAlbumsList.Count);
+                List<String> albumSongsLeft = tempAlbumsList[index].albumSongs;
                 String originalSong = albumSongsLeft.First();
                 playlist[originalSong] = counter.ToString(prefixTemplateString) + " - " + Path.GetFileName(originalSong);
+                Console.WriteLine(playlist[originalSong]);
                 albumSongsLeft.Remove(originalSong);
                 if (albumSongsLeft.Count == 0) {
-                    deepCopyOfAlbums.Remove(deepCopyOfAlbums[index]);
+                    tempAlbumsList.Remove(tempAlbumsList[index]);
                 }
                 ++counter;
             }
+
+            makePlaylistReal(outputFolder);
+            playlist.Clear();
+        }
+
+        public void makePlaylistReal(String outputFolder) {
+            foreach (KeyValuePair<String, String> song in this.playlist) {
+                Console.Write("Copying " + song.Value + "...");
+                File.Copy(song.Key, Path.Combine(outputFolder, song.Value));
+            }
+
         }
     }
 }

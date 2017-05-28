@@ -30,40 +30,67 @@ namespace Music_Shuffler {
         /// Actually copies the music files
         /// </summary>
         public void btnMakePlaylistClicked(object sender, RoutedEventArgs ev) {
-            foreach (Album album in playlist.albums) {
-                if (album.randomiseSongs) {
-                    album.shuffle();
+            String outputFolder = txtOutputFolder.Text;
+            if (outputFolder == "") {
+                MessageBox.Show("Output Folder required", "Unable to make playlist");
+                return;
+            }
+            if (!Directory.Exists(outputFolder)) {
+                Directory.CreateDirectory(outputFolder);
+            } else {
+                if (Directory.GetFiles(outputFolder).Any(file => !musicFileExtensions.Contains(Path.GetExtension(file)))) {
+                    MessageBox.Show("I will only clobber a folder if there are nothing but music files inside it.", "Unable to make playlist");
+                    return;
+                } else {
+                    Directory.Delete(outputFolder, recursive: true);
+                    Directory.CreateDirectory(outputFolder);
                 }
             }
 
-            //etc
-        }
+            List<Album> albumsToInclude = new List<Album>();
 
-        /// <summary>
-        /// Returns a folder path from a dialoge
-        /// </summary>
-        public String getFolderPathFromDialogue() {
-            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
-                dialog.IsFolderPicker = true;
-                if (dialog.ShowDialog() != CommonFileDialogResult.Ok) {
-                    return "";
+            foreach (ListBoxItem albumItem in lstbxAlbums.Items) {
+                Album album = albumItem.Tag as Album;
+                if ((bool)(((Grid)albumItem.Content).Children[0] as CheckBox).IsChecked) {
+                    Console.WriteLine("Added: " + album.albumRoot);
+                    albumsToInclude.Add(album);
+                    album.randomiseSongs = (bool)(((Grid)albumItem.Content).Children[1] as CheckBox).IsChecked;
+                    Console.WriteLine(album.albumRoot + " shuffled");
+                    if (album.randomiseSongs) {
+                        album.shuffle();
+                    } else {
+                        album.sort();
+                    }
                 }
-                return dialog.FileName;
+                
             }
+            playlist.generatePlaylist(albumsToInclude, outputFolder);
         }
 
         /// <summary>
         /// Opens folder dialogue to assist in choosing a root folder
         /// </summary>
         public void btnChooseRootClicked(object sender, RoutedEventArgs ev) {
-            txtRootFolder.Text = getFolderPathFromDialogue();
+            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
+                dialog.IsFolderPicker = true;
+                //dialog.Multiselect = true;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
+                    txtRootFolder.Text = dialog.FileName;
+                }
+            }
         }
 
         /// <summary>
         /// Opens folder dialogue to assist in choosing an output folder
         /// </summary>
         public void btnChooseOutputClicked(object sender, RoutedEventArgs ev) {
-            txtOutputFolder.Text = getFolderPathFromDialogue();
+            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
+                dialog.IsFolderPicker = true;
+                if (dialog.ShowDialog() != CommonFileDialogResult.Ok) {
+                    txtOutputFolder.Text = "";
+                }
+                txtOutputFolder.Text = dialog.FileName;
+            }
         }
 
         /***********************************************************************************************/
@@ -119,7 +146,8 @@ namespace Music_Shuffler {
 
         /// <summary>
         /// creates a GUI element for each album and populates 
-        /// the list box lstbxAlbums with them
+        /// the list box lstbxAlbums with them. 
+        /// Also adds the album object as a tag to the listboxitem
         /// </summary>
         public void populateGUIAlbums() {
             foreach (Album album in playlist.albums) {
@@ -152,6 +180,7 @@ namespace Music_Shuffler {
                 //Make ListBoxItem to hold grid
                 ListBoxItem albumItem = new ListBoxItem();
                 albumItem.Content = albumGrid;
+                albumItem.Tag = album;
 
                 //add ListBoxItem to ListBox
                 lstbxAlbums.Items.Add(albumItem);
