@@ -40,7 +40,7 @@ namespace Music_Shuffler {
                 Directory.CreateDirectory(outputFolder);
             } else {
                 if (Directory.GetFiles(outputFolder).Any(file => !musicFileExtensions.Contains(Path.GetExtension(file)))) {
-                    MessageBox.Show("I will only clobber a folder if there are nothing but music files inside it.", "Unable to make playlist");
+                    MessageBox.Show("I will only clobber a folder if there are nothing but music files inside it.", "Music Shuffler");
                     return;
                 } else {
                     Directory.Delete(outputFolder, recursive: true);
@@ -159,6 +159,7 @@ namespace Music_Shuffler {
                 shuffleAlbum.HorizontalAlignment = HorizontalAlignment.Right;
                 shuffleAlbum.Style = (Style)Resources["styleCheckbox2"];
 
+
                 //shuffle checkbox will not be enabled when the album is not being included
                 Binding shuffletoIncludeAlbumBinding = new Binding();
                 shuffletoIncludeAlbumBinding.Source = includeAlbum;
@@ -168,9 +169,9 @@ namespace Music_Shuffler {
                 //Make grid to hold checkboxes
                 Grid albumGrid = new Grid();
                 ColumnDefinition c1 = new ColumnDefinition();
-                c1.Width = new GridLength(2, GridUnitType.Star);
+                c1.Width = new GridLength(1, GridUnitType.Star);
                 ColumnDefinition c2 = new ColumnDefinition();
-                c2.Width = new GridLength(1, GridUnitType.Star);
+                c2.Width = new GridLength(1, GridUnitType.Auto);
                 albumGrid.ColumnDefinitions.Add(c1);
                 albumGrid.ColumnDefinitions.Add(c2);
                 //add the two checkboxes to the grid

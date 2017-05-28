@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Music_Shuffler;
 using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Threading;
+using System.Windows.Threading;
+using System.ComponentModel;
 
 namespace Music_Shuffler {
     /// <summary>
@@ -18,12 +23,78 @@ namespace Music_Shuffler {
         public Dictionary<String, String> playlist = new Dictionary<String, String>();
         public List<String> musicExtensions = new List<string>();
         public String outputFolder = "";
+        BackgroundWorker bw; //handles the copying of files
+        TextBox messageBox;
+        ListBox lstBox;
 
         public Playlist(List<String> _rootFolders, List<String> _musicExtensions) {
             this.rootFolders = _rootFolders;
             this.musicExtensions = _musicExtensions;
             this.generateAlbums();
+
+            messageBox = (Application.Current.MainWindow.Content as MainPage).txtMessageBlock;
+            lstBox = (Application.Current.MainWindow.Content as MainPage).lstbxAlbums;
+
+            bw = new BackgroundWorker();
+            bw.WorkerSupportsCancellation = false;
+            bw.WorkerReportsProgress = true;
+            bw.DoWork += new DoWorkEventHandler(bwCopyFiles);
+            bw.ProgressChanged += new ProgressChangedEventHandler(bwUpdateText);
         }
+
+        /// <summary>
+        /// Is called when makePlaylistReal calls bw.RunWorkerAsync();
+        /// copies eahc file in the background, calling ReportProgress (ie. bwUpdateText)
+        /// to update the text box. Also clears the playlist after its finished
+        /// </summary>
+        private void bwCopyFiles(object sender, DoWorkEventArgs e) {
+            Application.Current.Dispatcher.Invoke(() => {
+                messageBox.Visibility = Visibility.Visible;
+                lstBox.Visibility = Visibility.Hidden;
+                (Application.Current.MainWindow.Content as MainPage).btnChooseOutput.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).btnGetAlbums.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).btnMakePlaylist.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).txtOutputFolder.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).chkSelectAll.IsEnabled = false;
+                (Application.Current.MainWindow.Content as MainPage).chkShuffleAll.IsEnabled = false;
+            });
+            bw.ReportProgress(0, "Preparing to copy to " + this.outputFolder + "...");
+            foreach (KeyValuePair<String, String> song in this.playlist) {
+                String modifiedPath = Path.Combine(this.outputFolder, this.playlist[song.Key]);
+                File.Copy(song.Key, modifiedPath);
+                bw.ReportProgress(0, song.Value);
+            }
+            playlist.Clear();
+            Application.Current.Dispatcher.Invoke(() => {
+                bw.ReportProgress(0, "Finished!");
+                MessageBox.Show("Playlist created!", "Music Shuffler");
+                messageBox.Visibility = Visibility.Hidden;
+                lstBox.Visibility = Visibility.Visible;
+                (Application.Current.MainWindow.Content as MainPage).btnChooseOutput.IsEnabled = true;
+                (Application.Current.MainWindow.Content as MainPage).btnGetAlbums.IsEnabled = true;
+                (Application.Current.MainWindow.Content as MainPage).btnMakePlaylist.IsEnabled = true;
+                (Application.Current.MainWindow.Content as MainPage).txtOutputFolder.IsEnabled = true;
+                (Application.Current.MainWindow.Content as MainPage).chkSelectAll.IsEnabled = true;
+                (Application.Current.MainWindow.Content as MainPage).chkShuffleAll.IsEnabled = true;
+            });
+            
+        }
+
+        /// <summary>
+        /// Writes out to the textbox when called by the background worker delegate
+        /// </summary>
+        private void bwUpdateText(object sender, ProgressChangedEventArgs e){
+            messageBox.Text += e.UserState as String + "\n";
+
+            //keep it scrolled to the end
+            messageBox.Focus();
+            if (!(System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl)
+                  || System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.RightCtrl))) {
+                messageBox.CaretIndex = messageBox.Text.Length;
+                messageBox.ScrollToEnd();
+            }
+        }
+
 
         /// <summary>
         /// Generates albums from the direcotry tree. 
@@ -42,6 +113,7 @@ namespace Music_Shuffler {
         /// and copies the resultant playlist to the outputFolder
         /// </summary>
         public void generatePlaylist(List<Album> albumsToInclude, String outputFolder) {
+            this.outputFolder = outputFolder;
             //the albums are already shuffled if they needed to be, so we just keep randomly selecting 
             //an album and plucking the first song out until all the albums are empty
             //we need a deep copy of the albums list because we're deleting stuff from it
@@ -63,17 +135,15 @@ namespace Music_Shuffler {
             }
 
             //actually copy the files and reset the playlist
-            makePlaylistReal(outputFolder);
-            playlist.Clear();
+            makePlaylistReal();
         }
 
         /// <summary>
         /// Copy the files
         /// </summary>
-        public void makePlaylistReal(String outputFolder) {
-            foreach (KeyValuePair<String, String> song in this.playlist) {
-                Console.WriteLine("Copying " + song.Value + "...");
-                File.Copy(song.Key, Path.Combine(outputFolder, song.Value));
+        public void makePlaylistReal() {
+            if (bw.IsBusy != true) {
+                bw.RunWorkerAsync();
             }
         }
     }
