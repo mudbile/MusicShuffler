@@ -95,6 +95,11 @@ namespace Music_Shuffler {
             }
         }
 
+
+        public void btnOpenClicked(object sender, RoutedEventArgs ev) {
+            System.Diagnostics.Process.Start("explorer.exe", txtOutputFolder.Text);
+        }
+
         /***********************************************************************************************/
         /*       Select All / Select None         and         Shuffle All / Shuffle None               */
         /***********************************************************************************************/
@@ -123,6 +128,7 @@ namespace Music_Shuffler {
         /// </summary>
         public void btnGetAlbumsClicked(object sender, RoutedEventArgs ev) {
             //make extension list
+            musicFileExtensions.Clear();
             String[] temp = txtExtensions.Text.Split(',', ';', '|');
             foreach (String ext in temp){
                 musicFileExtensions.Add("." + ext.Trim());
@@ -147,7 +153,7 @@ namespace Music_Shuffler {
 
             this.clearGUIAlbums();
             this.populateGUIAlbums();
-            musicFileExtensions.Clear();
+            
         }
 
         public void clearGUIAlbums() {

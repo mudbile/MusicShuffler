@@ -41,7 +41,7 @@ Once you click **MAKE PLAYLIST** the copying will begin.
 
 
 If you'd like, you can click **STOP** and the process will stop after it is finished copying the current file.
-Afterwards, you have your playlist in the folder you chose:
+Afterwards, you have your playlist in the folder you chose, which you can open by clicking &#128193;
 
 ![Screenshot_4.png](/screenshots/Screenshot_4.png)
 

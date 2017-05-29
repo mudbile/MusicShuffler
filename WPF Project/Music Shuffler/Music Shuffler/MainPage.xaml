@@ -90,7 +90,15 @@
 			</Grid.ColumnDefinitions>
 			<TextBox Name="txtOutputFolder" Grid.Column="0" ToolTip="{Binding ElementName=txtOutputFolder, Path=Text}" Style="{StaticResource styleTextBox}"/>
 			<Button Name="btnChooseOutput" Grid.Column="1" Click="btnChooseOutputClicked" Style="{StaticResource styleButton2}">. . .</Button>
-			<Button Name="btnMakePlaylist" Grid.Column="2" Click="btnMakePlaylistClicked" Style="{StaticResource styleButton2}">Make Playlist</Button>
+			<Grid  Grid.Column="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Button Name="btnMakePlaylist" Grid.Column="0" Click="btnMakePlaylistClicked" Style="{StaticResource styleButton2}">Make</Button>
+				<Button Name="btnOpen" Grid.Column="1" Click="btnOpenClicked" Style="{StaticResource styleButton2}" Content="&#x1F4C1;"/>
+			</Grid>
+			
 			<Button Name="btnCancel" Grid.Column="2" Style="{StaticResource styleButton2}" Visibility="Hidden">STOP</Button>
 		</Grid>
 
