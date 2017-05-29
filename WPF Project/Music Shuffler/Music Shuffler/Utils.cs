@@ -51,36 +51,53 @@ namespace Music_Shuffler {
         public static List<Leaf> FolderWalk(List<String> rootFolders, List<String> validExtensions) {
             List<Leaf> leaves = new List<Leaf>();
             foreach (String rootFolder in rootFolders) {
-                leaves.AddRange(FolderWalk(rootFolder, validExtensions));
+                leaves.AddRange(FolderWalk(rootFolder, validExtensions, firstTime: true));
             }
-            return leaves;
+			Console.WriteLine(DateTime.Now);
+			//List<Leaf> result = leaves.GroupBy(leaf => leaf.root)
+			//	  .Select(groupMember => groupMember.First())
+			//      .ToList();
+			Console.WriteLine(DateTime.Now);
+			return leaves;
         }
 
 
         /// <summary>
         /// Walks down a single directory tree from rootFolder (inclusive) and returns a list of Leaf objects 
         /// for those folders that contain at least one file with a validExtensions extensions
+		/// This returns multiple copies of some folders so call .distinct() on the list. I need the ordering so
+		/// it's either remove the multiples or sort. the hash into a list at some stage.
         /// </summary>
-        public static List<Leaf> FolderWalk(string rootFolder, List<String> validExtensions) {
+        public static List<Leaf> FolderWalk(string rootFolder, List<String> validExtensions, bool firstTime = true) {
             List<Leaf> leaves = new List<Leaf>();
 
             //make folders a list (dynamic) because we need to add the rootFolder
             List<String> folders = Directory.GetDirectories(rootFolder).ToList();
-            folders.Add(rootFolder);
+			if (firstTime) {
+				folders.Add(rootFolder);
+			}
 
             foreach (string folder in folders) {
-                List<string> files = Directory.GetFiles(rootFolder).Where(
-                    file => validExtensions.Contains(Path.GetExtension(file))
-                ).ToList();
+				try {
+					List<string> files = Directory.GetFiles(folder).Where(
+						file => validExtensions.Contains(Path.GetExtension(file))
+					).ToList();
 
-                if (files.Count != 0) {
-                    Leaf leaf = new Leaf(folder, files);
-                    leaves.Add(leaf);
-                }
+					if (files.Count != 0) {
+						Leaf leaf = new Leaf(folder, files);
+						leaves.Add(leaf);
+					}
+
+				} catch (UnauthorizedAccessException) {
+					Console.WriteLine(folder);
+					continue;
+				}
+
+                
 
                 //recursive call - avoid an infinite loop
                 if (folder != rootFolder) {
-                    leaves.AddRange(FolderWalk(folder, validExtensions));
+                    leaves.AddRange(FolderWalk(folder, validExtensions, firstTime: false));
                 }
             }
 
