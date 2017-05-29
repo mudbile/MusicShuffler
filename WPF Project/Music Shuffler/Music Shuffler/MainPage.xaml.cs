@@ -24,6 +24,10 @@ namespace Music_Shuffler {
 
         public MainPage() {
             InitializeComponent();
+            //Music_Shuffler.Properties.Settings.Default.Reset();
+            txtExtensions.Text = Music_Shuffler.Properties.Settings.Default.extensions;
+            txtOutputFolder.Text = Music_Shuffler.Properties.Settings.Default.output_folder;
+            
         }
 
         /// <summary>
@@ -76,10 +80,8 @@ namespace Music_Shuffler {
             } 
 
             playlist.generatePlaylist(albumsToInclude, outputFolder);
-
-
-
-            
+            Music_Shuffler.Properties.Settings.Default.output_folder = txtOutputFolder.Text;
+            Music_Shuffler.Properties.Settings.Default.Save();
         }
 
 
@@ -153,7 +155,8 @@ namespace Music_Shuffler {
 
             this.clearGUIAlbums();
             this.populateGUIAlbums();
-            
+            Music_Shuffler.Properties.Settings.Default.extensions = txtExtensions.Text;
+            Music_Shuffler.Properties.Settings.Default.Save();
         }
 
         public void clearGUIAlbums() {
