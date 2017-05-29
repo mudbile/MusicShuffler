@@ -73,9 +73,10 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<CheckBox Name="chkSelectAll" Grid.Row="0" Grid.Column="0" Click="chkSelectAllClicked" Style="{StaticResource styleCheckbox}">Select All</CheckBox>
-			<Button Name="btnGetAlbums" Grid.Row="0" Grid.Column="1" Click="btnGetAlbumsClicked" Style="{StaticResource styleButton}">Get Albums</Button>
-				<CheckBox Name="chkShuffleAll" Grid.Row="0" Grid.Column="2" Click="chkShuffleAllClicked" Style="{StaticResource styleCheckbox}">Shuffle All</CheckBox>
+			<TextBox Name="txtExtensions" Grid.Row="0" Style="{StaticResource styleTextBox}" Grid.ColumnSpan="3">mp3, wav</TextBox>
+			<CheckBox Name="chkSelectAll" Grid.Row="1" Grid.Column="0" Click="chkSelectAllClicked" Style="{StaticResource styleCheckbox}">Select All</CheckBox>
+			<Button Name="btnGetAlbums" Grid.Row="1" Grid.Column="1" Click="btnGetAlbumsClicked" Style="{StaticResource styleButton}">Get Albums</Button>
+			<CheckBox Name="chkShuffleAll" Grid.Row="1" Grid.Column="2" Click="chkShuffleAllClicked" Style="{StaticResource styleCheckbox}">Shuffle All</CheckBox>
 		</Grid>
 		<ListBox Name="lstbxAlbums" Grid.Row="1" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
 		<TextBox Name="txtMessageBlock" Grid.Row="1" Visibility="Hidden" Style="{StaticResource styleConsole}" VerticalScrollBarVisibility="Auto"/>

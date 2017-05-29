@@ -20,7 +20,7 @@ namespace Music_Shuffler {
     /// </summary>
     public partial class MainPage : Page {
         Playlist playlist;
-        List<String> musicFileExtensions = new List<string>() { ".mp3", ".wav" };
+        List<String> musicFileExtensions = new List<string>();
 
         public MainPage() {
             InitializeComponent();
@@ -122,6 +122,13 @@ namespace Music_Shuffler {
         /// Retrieves albums from root folder and calls populateGUIAlbums to populate gui
         /// </summary>
         public void btnGetAlbumsClicked(object sender, RoutedEventArgs ev) {
+            //make extension list
+            String[] temp = txtExtensions.Text.Split(',', ';', '|');
+            foreach (String ext in temp){
+                musicFileExtensions.Add("." + ext.Trim());
+            }
+
+
             List<String> roots = new List<string>();
 
             using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
@@ -140,6 +147,7 @@ namespace Music_Shuffler {
 
             this.clearGUIAlbums();
             this.populateGUIAlbums();
+            musicFileExtensions.Clear();
         }
 
         public void clearGUIAlbums() {

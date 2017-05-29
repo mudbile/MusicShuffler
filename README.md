@@ -12,6 +12,8 @@ It started out as a small python prototype but I wanted a GUI so it's a WPF appl
 
 ![Screenshot_1.png](/screenshots/Screenshot_1.png) 
 
+Note: The text box at the top lists the extensions that the app will search for as music files. Each extension should
+be separated by a comma, semi-colon or vertical bar. It doesn't matter if there's spaces between them. 
 
 Start the application and click **GET ALBUMS**. You can select multiple top-level directories and he will dig down 
 into the directory trees to find folders that contain music files. These will be displayed in the list box as albums. 
