@@ -44,11 +44,3 @@ If you'd like, you can click **STOP** and the process will stop after it is fini
 Afterwards, you have your playlist in the folder you chose, which you can open by clicking &#128193;
 
 ![Screenshot_4.png](/screenshots/Screenshot_4.png)
-
-
-# Thanks
-
-I found a useful class for providing natural ordering [here](https://www.codeproject.com/Articles/22978/Implementing-the-NET-IComparer-interface-to-get-a).
-
-I also used Fody to wrap everything up into one executable, and the old WindowsAPICodepack for the folder dialogue.
-
