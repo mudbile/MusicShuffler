@@ -24,8 +24,6 @@ namespace Music_Shuffler {
             InitializeComponent();
             this.Content = new MainPage();
         }
-
-
         
     }
 }
